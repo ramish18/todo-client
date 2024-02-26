@@ -23,7 +23,7 @@ const AddTodoForm: React.FC<{ onAdd: (title: string) => void }> = ({
       return
     }
     onAdd(title);
-    setTitle(""); // Reset the input field after submission
+    setTitle(""); 
   };
 
   return (

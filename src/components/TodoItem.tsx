@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Bounce, toast } from "react-toastify";
 
 interface Todo {
   id: number;
@@ -23,6 +24,21 @@ const TodoItem: React.FC<TodoItemProps> = ({
   const [newTitle, setNewTitle] = useState(todo.title);
 
   const handleUpdate = () => {
+    if (!newTitle.trim()) {
+      toast.error("Title should not be empty", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+      });
+      setNewTitle(todo.title);
+      return;
+    }
     onUpdate(todo.id, newTitle);
     setEditingId(null);
   };
@@ -37,7 +53,9 @@ const TodoItem: React.FC<TodoItemProps> = ({
           className="flex-1 p-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-2 sm:mb-0"
         />
       ) : (
-        <span className="text-sm text-gray-800 w-full mb-2 sm:mb-0 sm:w-auto">{todo.title}</span>
+        <span className="text-sm text-gray-800 w-full mb-2 sm:mb-0 sm:w-auto">
+          {todo.title}
+        </span>
       )}
       <div className="flex justify-end gap-2 pl-2">
         {isEditing ? (
